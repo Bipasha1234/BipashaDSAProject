@@ -48,14 +48,14 @@ public class TiktokForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         
-          // Display recommendations and content
-        displayOtherUsersRecommendations();
-          displayComments();
-          displayUserContent(loggedInUserId);
+//          // Display recommendations and content
+//        displayOtherUsersRecommendations();
+//          displayComments();
+//          displayUserContent(loggedInUserId);
     }
 
      // Method to upload content to the database of posts table
-private void uploadContent(int userId, String content) {
+public void uploadContent(int userId, String content) {
     try {
         String query = "INSERT INTO posts (user_id, content) VALUES (?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -70,7 +70,7 @@ private void uploadContent(int userId, String content) {
 }
 
       // Method to fetch content from the database
-    private String fetchContent() {
+    public String fetchContent() {
         String content = null;
         try {
             String query = "SELECT content FROM posts WHERE user_id = ?";
@@ -93,7 +93,7 @@ private void uploadContent(int userId, String content) {
     }
     
     //method to insert data in database in comments table
-    private void commentOnContent(int contentId, String comment) {
+    public void commentOnContent(int contentId, String comment) {
         try {
             String insertQuery = "INSERT INTO comments (user_id, content) VALUES (?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
@@ -109,14 +109,14 @@ private void uploadContent(int userId, String content) {
     }
    
     //methods to display comments in the UI
-private void displayComments() {
+public void displayComments() {
         String comments = fetchComments();
         if (comments != null && !comments.isEmpty()) {
             contentTextArea.append(comments + "\n");
         }
     }
   // Method to fetch comments from the database
-private String fetchComments() {
+public String fetchComments() {
     StringBuilder comments = new StringBuilder();
     try {
         String query = "SELECT content FROM comments WHERE user_id = ?";
@@ -139,7 +139,7 @@ private String fetchComments() {
 }
 
  // Method to display user content in the UI
-    private void displayUserContent(int userId) {
+    public void displayUserContent(int userId) {
     try {
         String query = "SELECT content FROM posts WHERE user_id = ?";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -164,7 +164,7 @@ private String fetchComments() {
 
     
      // Method to follow a user and save that data in database.
-private void followUser(int followerId, int followedId) {
+public void followUser(int followerId, int followedId) {
     try {
         
         String query = "INSERT INTO follows (follower_id, followed_id) VALUES (?, ?)";
@@ -181,7 +181,7 @@ private void followUser(int followerId, int followedId) {
 }
 
     // Method to get the user ID from the database
-     private static int getUserId() {
+     public static int getUserId() {
         int userId = 0;
         String sql = "SELECT user_id FROM registerdsa WHERE firstName = ? AND lastName = ?";
         
@@ -378,7 +378,7 @@ private void followUser(int followerId, int followedId) {
     }// </editor-fold>//GEN-END:initComponents
 
     // Method to display name for recommendations of users for the currently logged-in user
-    private int getRecommendedUserId() {
+    public int getRecommendedUserId() {
     int recommendedUserId = -1;
     try {
        
@@ -481,7 +481,7 @@ private void followUser(int followerId, int followedId) {
     }//GEN-LAST:event_FollowRecommendedActionPerformed
 
     // Method to display content (comments and posts) for a specific user
-    private void displayContentForUser(int userId) {
+    public void displayContentForUser(int userId) {
         
         // Fetch and display comments and posts for the specified user
     // This method is invoked when the user clicks the Follow Recommended button
@@ -516,7 +516,7 @@ private void followUser(int followerId, int followedId) {
     }
 }
 // Method to check if the logged-in user is following a specific user
-    private boolean isFollowingUser(int followerId, int followedId) {
+    public boolean isFollowingUser(int followerId, int followedId) {
     
         // Check if the logged-in user is following the specified user
     // Returns true if following, false otherwise
@@ -537,7 +537,7 @@ private void followUser(int followerId, int followedId) {
     return isFollowing;
 }
     // Method to search for users based on a query
-    private void searchUsers(String query) {
+    public void searchUsers(String query) {
         
         // Search for users whose first name or last name matches the query
     try {
@@ -554,7 +554,7 @@ private void followUser(int followerId, int followedId) {
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             searchResults.append("User ID: ").append(userId).append(", Name: ").append(firstName).append(" ").append(lastName).append("\n");
-            appendCommentsForUser(userId);
+            appendCommentsPostsForUser(userId);
         }
         if (searchResults.length() == 0) {
             searchResults.append("No results found.");
@@ -568,7 +568,7 @@ private void followUser(int followerId, int followedId) {
     }
 }
     // Method to append comments and posts for a specific user in the search results
-private void appendCommentsForUser(int userId) {
+public void appendCommentsPostsForUser(int userId) {
      // Append comments and posts for the specified user in the search results
    try {
         String commentsQuery = "SELECT content FROM comments WHERE user_id = ?";
@@ -601,7 +601,7 @@ private void appendCommentsForUser(int userId) {
     }
 }
 // Method to display recommendations for other users
-     private void displayOtherUsersRecommendations() {
+     public void displayOtherUsersRecommendations() {
           // Display recommendations for other users (currently limited to one user)
     try {
         String query = "SELECT user_id, firstName, lastName FROM registerdsa WHERE user_id != ? LIMIT 1";
@@ -626,6 +626,28 @@ private void appendCommentsForUser(int userId) {
         JOptionPane.showMessageDialog(null, "Failed to fetch recommendations for other users.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+     
+     // Add this method to your TiktokForm class
+public JTextArea getContentTextArea() {
+    return contentTextArea;
+}
+public JTextArea getOtherUsers() {
+    return OtherUsers;
+}
+public JTextField getSearchField() {
+    return SearchField;
+}
+
+public JButton getSearchBtn() {
+    return SearchBtn;
+}
+ public void setSearchField(JTextField searchField) {
+        this.SearchField = searchField;
+    }
+
+ public void setSearchBtn(JButton searchField) {
+        this.SearchBtn = searchField;
+    }
      
      // Main method
     public static void main(String args[]) {
@@ -654,4 +676,6 @@ private void appendCommentsForUser(int userId) {
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JButton uploadButton;
     // End of variables declaration//GEN-END:variables
+
+   
 }
