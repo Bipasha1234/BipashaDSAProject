@@ -1,13 +1,13 @@
 package app.Test;
 
-import app.Test.TiktokFormTesting;
+
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-public class TestRunner {
+public class TestRunnerLogin {
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(TiktokFormTesting.class);
+        Result result = JUnitCore.runClasses(LoginTesting.class);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
         }
