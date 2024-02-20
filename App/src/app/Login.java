@@ -269,12 +269,12 @@ private boolean checkCredentials(String mobileNumber, String newPassword) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton LoginButton;
-    private javax.swing.JTextField NumberField;
+    public javax.swing.JButton LoginButton;
+    public javax.swing.JTextField NumberField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel phoneNumber;
-    private javax.swing.JPasswordField pwField;
+    public javax.swing.JPasswordField pwField;
     private javax.swing.JLabel pwLabel;
     // End of variables declaration//GEN-END:variables
 

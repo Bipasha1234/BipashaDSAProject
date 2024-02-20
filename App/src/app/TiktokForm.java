@@ -70,7 +70,7 @@ private void uploadContent(int userId, String content) {
 }
 
       // Method to fetch content from the database
-    private String fetchContent() {
+    public String fetchContent() {
         String content = null;
         try {
             String query = "SELECT content FROM posts WHERE user_id = ?";
@@ -109,7 +109,7 @@ private void uploadContent(int userId, String content) {
     }
    
     //methods to display comments in the UI
-private void displayComments() {
+public void displayComments() {
         String comments = fetchComments();
         if (comments != null && !comments.isEmpty()) {
             contentTextArea.append(comments + "\n");
@@ -601,7 +601,7 @@ private void appendCommentsForUser(int userId) {
     }
 }
 // Method to display recommendations for other users
-     private void displayOtherUsersRecommendations() {
+     public void displayOtherUsersRecommendations() {
           // Display recommendations for other users (currently limited to one user)
     try {
         String query = "SELECT user_id, firstName, lastName FROM registerdsa WHERE user_id != ? LIMIT 1";
@@ -626,6 +626,26 @@ private void appendCommentsForUser(int userId) {
         JOptionPane.showMessageDialog(null, "Failed to fetch recommendations for other users.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+     public JTextArea getContentTextArea() {
+    return contentTextArea;
+}
+public JTextArea getOtherUsers() {
+    return OtherUsers;
+}
+public JTextField getSearchField() {
+    return SearchField;
+}
+
+public JButton getSearchBtn() {
+    return SearchBtn;
+}
+ public void setSearchField(JTextField searchField) {
+        this.SearchField = searchField;
+    }
+
+ public void setSearchBtn(JButton searchField) {
+        this.SearchBtn = searchField;
+    }
      
      // Main method
     public static void main(String args[]) {

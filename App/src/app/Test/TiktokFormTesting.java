@@ -1,7 +1,7 @@
 package app.Test;
 
 import app.TiktokForm;
-import java.awt.event.ActionEvent;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+
 import static org.junit.Assert.assertTrue;
 
 public class TiktokFormTesting {

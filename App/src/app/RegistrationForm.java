@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
  //AppForm class represents main JFrame window for user registration form
 public class RegistrationForm extends javax.swing.JFrame {
@@ -317,6 +320,8 @@ public class RegistrationForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_RegisterButtonActionPerformed
 
+  
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //There is login buttton , after registration clicking there to log in. 
         new Login().setVisible(true);
@@ -333,6 +338,66 @@ private String getSelectedGender() {
     }
     return "";
 }
+public JTextField getFirstNameField() {
+        return firstNameField;
+    }
+
+    public JTextField getLastNameField() {
+        return LastNameField;
+    }
+
+    public JTextField getMobileNumberField() {
+        return mobileNumberField;
+    }
+
+    public JPasswordField getNewPwField() {
+        return newPwField;
+    }
+//   public JRadioButton getRegisteredGender() {
+//        return Others; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+   
+    public String getRegisteredFirstName() {
+        return firstNameField.getText();
+    }
+
+    public String getRegisteredLastName() {
+        return LastNameField.getText();
+    }
+
+    public String getRegisteredMobileNumber() {
+        return mobileNumberField.getText();
+    }
+
+    public String getRegisteredPassword() {
+        return new String(newPwField.getPassword());
+    }
+
+    public String getRegisteredGender() {
+        if (maleRadioButton.isSelected()) {
+            return "Male";
+        } else if (femaleRadioButton.isSelected()) {
+            return "Female";
+        } else if (Others.isSelected()) {
+            return "Others";
+        }
+        return "";
+    }
+    public JRadioButton getMaleRadioButton() {
+    return maleRadioButton;
+}
+
+public JRadioButton getFemaleRadioButton() {
+    return femaleRadioButton;
+}
+
+public JRadioButton getOthersRadioButton() {
+    return Others;
+}
+
+   
+
+
     /**
      * @param args the command line arguments
      */
@@ -373,7 +438,7 @@ private String getSelectedGender() {
     private javax.swing.JLabel LastName;
     private javax.swing.JTextField LastNameField;
     private javax.swing.JRadioButton Others;
-    private javax.swing.JButton RegisterButton;
+    public javax.swing.JButton RegisterButton;
     private javax.swing.JRadioButton femaleRadioButton;
     private javax.swing.JLabel firstName;
     private javax.swing.JTextField firstNameField;
