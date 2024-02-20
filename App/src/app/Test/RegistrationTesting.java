@@ -28,7 +28,7 @@ public class RegistrationTesting {
         // Set up test data
         String firstName = "John";
         String lastName = "Doe";
-        String mobileNumber = "123456780";
+        String mobileNumber = "132367";
         String password = "password";
         String gender = "Male";
 
