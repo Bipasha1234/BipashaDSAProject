@@ -123,6 +123,8 @@ private String fetchComments() {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, loggedInUserId);
         ResultSet resultSet = statement.executeQuery();
+         contentTextArea.append("\n");
+        contentTextArea.append("Currently logged in User "+ loggedInUserId );
         contentTextArea.append("\n");
    contentTextArea.append("User " + loggedInUserId + "'s Comments:\n");
         while (resultSet.next()) {
@@ -146,6 +148,7 @@ private String fetchComments() {
         statement.setInt(1, userId);
         ResultSet resultSet = statement.executeQuery();
 
+         
         contentTextArea.append("User" + userId + "'s Content:\n");
 
        while (resultSet.next()) {
@@ -449,35 +452,44 @@ private void followUser(int followerId, int followedId) {
         // Display a warning message if the search query is empty
             JOptionPane.showMessageDialog(null, "Please enter a search query.", "Empty Query", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_SearchBtnActionPerformed
+    }
 
     private void SearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchFieldActionPerformed
 
-    }//GEN-LAST:event_SearchFieldActionPerformed
-
+    }
     // Variable to track if content has been displayed for a recommended user
     private boolean contentDisplayed = false; 
     
     // Method to handle the action when the Follow Recommended button is clicked
     private void FollowRecommendedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FollowRecommendedActionPerformed
-  // Retrieve the recommended user ID
-        int recommendedUserId = getRecommendedUserId();
+   // Retrieve the recommended user ID
+    int recommendedUserId = getRecommendedUserId();
 
-// Check if the logged-in user is already following the recommended user
+    // Check if the logged-in user is already following the recommended user
     boolean isFollowing = isFollowingUser(loggedInUserId, recommendedUserId);
-  // If already following, display the content of the recommended user
-    if (isFollowing) {
-        if (!contentDisplayed) {
-       
-            displayContentForUser(recommendedUserId);
-            contentDisplayed = true; // Set the flag to true to indicate content is displayed
+
+    // If not already following, prompt user to follow and display content if they choose to
+    if (!isFollowing) {
+        int option = JOptionPane.showConfirmDialog(null, "Do you want to follow the recommended user?", "Follow Recommended User", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            // Follow the recommended user and then display content if it hasn't been displayed before
+            followUser(loggedInUserId, recommendedUserId);
+            if (!contentDisplayed) {
+                displayContentForUser(recommendedUserId);
+                contentDisplayed = true;
+            }
         }
     } else {
-        // Follow the recommended user and then display content
-        followUser(loggedInUserId, recommendedUserId);
-        displayContentForUser(recommendedUserId);
-        contentDisplayed = true; // Set the flag to true to indicate content is displayed
+        // If already following, display "Already Followed" message
+        JOptionPane.showMessageDialog(null, "You are already following the recommended user.", "Already Followed", JOptionPane.INFORMATION_MESSAGE);
+        
+        // Display their content if it hasn't been displayed before
+        if (!contentDisplayed) {
+            displayContentForUser(recommendedUserId);
+            contentDisplayed = true;
+        }
     }
+
     }//GEN-LAST:event_FollowRecommendedActionPerformed
 
     // Method to display content (comments and posts) for a specific user
@@ -517,10 +529,9 @@ private void followUser(int followerId, int followedId) {
 }
 // Method to check if the logged-in user is following a specific user
     private boolean isFollowingUser(int followerId, int followedId) {
-    
-        // Check if the logged-in user is following the specified user
+    // Check if the logged-in user is following the specified user
     // Returns true if following, false otherwise
-        boolean isFollowing = false;
+    boolean isFollowing = false;
     try {
         String query = "SELECT * FROM follows WHERE follower_id = ? AND followed_id = ?";
         PreparedStatement statement = connection.prepareStatement(query);
